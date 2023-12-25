@@ -51,8 +51,8 @@ variables:
   thermostat_current: "{{ state_attr(thermostat, 'current_temperature') }}"
   activate_temp: "{{ thermostat_current + 3 }}"
   deactivate_temp: "{{ thermostat_current - 3 }}"
-  calculated_adjustment: "{{ actual_temperature + target_temperature_diff }}"
-  calculated_target_temperature_diff: "{{ ( thermostat_setpoint - calculated_adjustment ) | round }}"
+  calculated_adjustment: "{{ actual_temperature - target_temperature_diff }}"
+  calculated_target_temperature_diff: "{{ ( calculated_adjustment - thermostat_setpoint ) | round }}"
 
 trigger:
   #- platform: state
@@ -67,7 +67,7 @@ action:
 - service: system_log.write
   data:
     message: >
-      {{ thermostat }} has temp set to {{ thermostat_setpoint }} F and room {{ temperature_sensor }} has temperature {{ actual_temperature }} (with diff: {{ calculated_adjustment }}). Target temperature diff is {{ calculated_target_temperature_diff }}
+      {{ thermostat }} has temp set to {{ thermostat_setpoint }} F (target temp: {{ target_temperature }}) and room {{ temperature_sensor }} has temperature {{ actual_temperature }} (with diff: {{ calculated_adjustment }}). Target temperature diff is {{ calculated_target_temperature_diff }}
     level: info
     logger: blueprints.reshetylo.target_temperature_adjustment_fahrenheit
 - service: system_log.write
