@@ -82,7 +82,12 @@ action:
     level: debug
     logger: blueprints.reshetylo.target_temperature_adjustment_fahrenheit
 - service: climate.set_temperature
-   data:
+  data:
     entity_id: "{{ thermostat }}"
-    temperature: {% if calculated_target_temperature_diff < 0 %}{{ activate_temp }}{% else %}{{ deactivate_temp }}{% endif %}
+    temperature: >
+      {% if calculated_target_temperature_diff < 0 %}
+      {{ activate_temp }}
+      {% else %}
+      {{ deactivate_temp }}
+      {% endif %}
 mode: single
