@@ -61,21 +61,21 @@ action:
       data:
         entity_id: "{{ thermostat }}"
   
-- service: system_log.write
-  data:
-    message: >
-      {{ thermostat }} has temp set to {{ thermostat_setpoint }} F and room {{ temperature_sensor }} has temperature {{ actual_temperature }} (with diff: {{ calculated_adjustment }}). Target temperature diff is {{ calculated_target_temperature_diff }}
-    level: info
-    logger: blueprints.reshetylo.target_temperature_adjustment_fahrenheit
-- service: system_log.write
-  data:
-    message: >
-      thermostat: {{ thermostat }},
-      temperature_sensor: {{ temperature_sensor }},
-      target_temperature: {{ target_temperature }},
-      actual_temperature: {{ actual_temperature }},
-      calculated_adjustment: {{ calculated_adjustment }},
-      calculated_target_temperature_diff: {{ calculated_target_temperature_diff }}
-    level: debug
-    logger: blueprints.reshetylo.target_temperature_adjustment_fahrenheit
+  - service: system_log.write
+    data:
+      message: >
+        {{ thermostat }} has temp set to {{ thermostat_setpoint }} F and room {{ temperature_sensor }} has temperature {{ actual_temperature }} (with diff: {{ calculated_adjustment }}). Target temperature diff is {{ calculated_target_temperature_diff }}
+      level: info
+      logger: blueprints.reshetylo.target_temperature_adjustment_fahrenheit
+  - service: system_log.write
+    data:
+      message: >
+        thermostat: {{ thermostat }},
+        temperature_sensor: {{ temperature_sensor }},
+        target_temperature: {{ target_temperature }},
+        actual_temperature: {{ actual_temperature }},
+        calculated_adjustment: {{ calculated_adjustment }},
+        calculated_target_temperature_diff: {{ calculated_target_temperature_diff }}
+      level: debug
+      logger: blueprints.reshetylo.target_temperature_adjustment_fahrenheit
 mode: single
